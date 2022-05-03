@@ -19,21 +19,25 @@ typedef const struct {
 	const unsigned int interval;
 	const unsigned int signal;
 } Block;
-#include "config.h"
 
-#ifdef CLICKABLE_BLOCKS
-#undef CLICKABLE_BLOCKS
-#define CLICKABLE_BLOCKS 1
-#else
-#define CLICKABLE_BLOCKS 0
-#endif
+const Block blocks[] = {
+    BLOCK("ingot-datetime", 60, 6),
+	// BLOCK("sb-mail",    1800, 17),
+	// BLOCK("sb-music",   0,    18),
+	// BLOCK("sb-disk",    1800, 19),
+	// BLOCK("sb-memory",  10,   20),
+	// BLOCK("sb-loadavg", 5,    21),
+	// BLOCK("sb-mic",     0,    26),
+	// BLOCK("sb-record",  0,    27),
+	// BLOCK("sb-volume",  0,    22),
+	// BLOCK("sb-battery", 5,    23),
+	// BLOCK("sb-date",    1,    24)
+};
 
-#ifdef LEADING_DELIMITER
-#undef LEADING_DELIMITER
+#define CMDLENGTH 45
+#define DELIMITER "  "
 #define LEADING_DELIMITER 1
-#else
-#define LEADING_DELIMITER 0
-#endif
+#define CLICKABLE_BLOCKS 1
 
 static Display* dpy;
 static int screen;
