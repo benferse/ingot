@@ -5,7 +5,7 @@ CC = gcc
 
 ingot: main.o
 	$(CC) main.o -lX11 -Ofast -o ingot
-main.o: main.c config.h
+main.o: main.c
 	$(CC) -Ofast -c main.c
 clean:
 	rm -f *.o *.gch ingot
