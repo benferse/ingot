@@ -1,2 +1,12 @@
 #!/usr/bin/env bash
-date '+%H:%M'
+
+show_date_details() {
+    date '+%A, %b %d %Y'
+}
+
+case "$BLOCK_BUTTON" in
+    1) notify-send "$(show_date_details)" ;;
+    3) $TERMINAL -e nvim $0 ;;
+esac
+
+date "+%H:%M"
