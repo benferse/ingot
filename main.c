@@ -21,7 +21,8 @@ typedef const struct {
 } Block;
 
 const Block blocks[] = {
-    BLOCK("ingot-datetime", 60, 6),
+    BLOCK("ingot-battery",  30, 2),
+    BLOCK("ingot-datetime", 60, 1),
 	// BLOCK("sb-mail",    1800, 17),
 	// BLOCK("sb-music",   0,    18),
 	// BLOCK("sb-disk",    1800, 19),
@@ -157,8 +158,8 @@ void debug() {
 	if (!getStatus(statusBar[0], statusBar[1]))
 		return;
 
-	write(STDOUT_FILENO, statusBar[0], strlen(statusBar[0]));
-	write(STDOUT_FILENO, "\n", 1);
+	(void)!! write(STDOUT_FILENO, statusBar[0], strlen(statusBar[0]));
+	(void)!! write(STDOUT_FILENO, "\n", 1);
 }
 
 void setRoot() {
@@ -177,7 +178,7 @@ void setRoot() {
 
 void signalHandler() {
 	struct signalfd_siginfo info;
-	read(signalFD, &info, sizeof(info));
+	(void)!! read(signalFD, &info, sizeof(info));
 	unsigned int signal = info.ssi_signo;
 
 	switch (signal) {
@@ -267,7 +268,7 @@ void init() {
 
 	for (int i = 0; i < LEN(blocks); i++) {
 		// Append each block's pipe to `epollFD`
-		pipe(pipes[i]);
+		(void)!! pipe(pipes[i]);
 		event.data.u32 = i;
 		epoll_ctl(epollFD, EPOLL_CTL_ADD, pipes[i][0], &event);
 
