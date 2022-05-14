@@ -1,7 +1,71 @@
 #!/usr/bin/env bash
 status=""
+
+case "$BLOCK_BUTTON" in
+    1)
+        txt=""
+        for b in $(upower -e | grep BAT); do
+            txt="$txt\n$(upower -i $b | grep --color=never -E 'native-path|state|percentage|to\ full|to\ empty')\n"
+        done
+        notify-send "Power status" "${txt:-On AC power}"
+        ;;
+esac
+
 for f in /sys/class/power_supply/BAT?; do
-    status="$status  $(cat $f/capacity)%"
+    if [ ! -d $f ]; then
+        continue
+    fi
+
+    bat_state=$(cat $f/status)
+    capacity=$(cat $f/capacity)
+
+    case "$bat_state" in
+        "Full") icon="" ;;
+        "Unknown") icon="" ;;
+        "Not charging") icon="" ;;
+
+        "Charging") 
+            if (($capacity < 20)); then
+                icon=""
+            elif (($capacity < 40)); then
+                icon=""
+            elif (($capacity < 60)); then
+                icon=""
+            elif (($capacity < 80)); then
+                icon=""
+            elif (($capacity < 100)); then
+                icon=""
+            else
+                icon=""
+            fi
+            ;;
+
+        "Discharging")
+            if (($capacity < 10)); then
+                icon=""
+            elif (($capacity < 20)); then
+                icon=""
+            elif (($capacity < 30)); then
+                icon=""
+            elif (($capacity < 40)); then
+                icon=""
+            elif (($capacity < 50)); then
+                icon=""
+            elif (($capacity < 60)); then
+                icon=""
+            elif (($capacity < 70)); then
+                icon=""
+            elif (($capacity < 80)); then
+                icon=""
+            elif (($capacity < 100)); then
+                icon=""
+            else
+                icon=""
+            fi
+            ;;
+    esac
+
+    status="$status $icon ${capacity}%"
 done
 
-echo $status
+echo ${status:-ﮣ A/C}
