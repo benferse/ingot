@@ -21,6 +21,7 @@ typedef const struct {
 } Block;
 
 const Block blocks[] = {
+    BLOCK("ingot-weather", 600, 3),
     BLOCK("ingot-battery",  30, 2),
     BLOCK("ingot-datetime", 60, 1),
 	// BLOCK("sb-mail",    1800, 17),

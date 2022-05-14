@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+conditions=$(curl -s -f -m 5 wttr.in/?format="%c%t" 2>/dev/null)
+[[ "$conditions" =~ .*°F ]] && echo ${conditions} || echo "--°F"
